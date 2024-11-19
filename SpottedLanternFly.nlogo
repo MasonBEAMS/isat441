@@ -1,4 +1,4 @@
-hello
+this is julio
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
