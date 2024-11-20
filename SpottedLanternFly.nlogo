@@ -1,4 +1,27 @@
-this is julio
+turtles-own
+[nearest-fly
+nearest-crop]
+
+to setup
+  ca
+  create-turtles 100 [setxy random-xcor random-ycor
+  set color red
+  set shape "bug" ]
+
+  reset-ticks
+end
+
+to go
+  ask turtles []
+
+  tick
+end
+
+
+to-report finding-nearest-bug
+
+end
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -27,14 +50,40 @@ GRAPHICS-WINDOW
 ticks
 30.0
 
+BUTTON
+51
+63
+114
+96
+NIL
+setup\n
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+Modeling human engagement eliminating an invasive species 
 
 ## HOW IT WORKS
 
 (what rules the agents use to create the overall behavior of the model)
+Farm
+- turtles own
+- creates crops
+Bugs
+- walk straight change
+- when within cone go after farms
+Humans
+- walk straight or uniform
+- when within cone of bugs go after bugs
 
 ## HOW TO USE IT
 
