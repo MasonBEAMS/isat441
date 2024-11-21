@@ -15,15 +15,9 @@ flies-own
   my-speed
 ]
 
-farms-own
-[
-  my-crops
-  my-pesticide-use
-]
-
 people-own
 [
-  my-vision-cone
+  my-target
   participation-rate ;percentage chance of killing a bug upon finding one
   my-speed
 ]
@@ -34,7 +28,9 @@ people-own
 
 to setup
   clear-all
-  make-farms init-farms ;makes farms based on slider
+
+  ask patches [set pcolor white]
+  make-farms init-farms
 
   make-flies init-flies ;makes flies based on slider
   ask flies [set my-speed .1]
@@ -56,11 +52,11 @@ to make-flies [flycount]
 end
 
 to make-farms [farmcount]
-  create-farms farmcount [
-    setxy random-xcor random-ycor
-    set color green
-    set shape "square"
-    set size 3
+  repeat farmcount [
+    ask one-of patches [
+      set pcolor green
+      ask neighbors [set pcolor green]
+    ]
   ]
 end
 
@@ -81,6 +77,7 @@ end
 to go
   ask people [
     fd my-speed
+
   ]
   ask flies[
     fd my-speed
@@ -88,7 +85,9 @@ to go
   wait .1
 end
 
+to aquire-bug
 
+end
 
 to-report finding-nearest-bug
 
