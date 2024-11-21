@@ -41,7 +41,7 @@ to go
 end
 
 to make-flies [flycount]
-  create-flies flycount [
+  create-fl [
     setxy random-xcor random-ycor
     set color red
     set shape "bug"
