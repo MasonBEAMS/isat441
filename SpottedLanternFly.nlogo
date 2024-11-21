@@ -1,6 +1,6 @@
-;-------------------------------------------------
-;- Allie Zombron, Mason Scofield, Julio
-;-------------------------------------------------
+; -------------------------------------------------
+; - Allie Zombron, Mason Scofield, Julio
+; -------------------------------------------------
 
 
 breed [flies fly]
@@ -18,26 +18,24 @@ farms-own
 [
   my-crops
   my-pesticide-use
+
 ]
 
 people-own
 [
-  my-vision cone
+  my-vision-cone
+  participation-rate ;percentage chance of killing a bug upon finding one
 ]
 
-;--------------------------
-
+; --------------------------
+; - SET UP FUNCTIONS
+; --------------------------
 to setup
   clear-all
-  make-flies init-flies
-
+  make-flies init-flies ;makes flies based on slider
+  make-farms init-farms ;makes farms based on slider
+  make-people init-people ;makes farms based on slider
   reset-ticks
-end
-
-to go
-  ask flies []
-
-  tick
 end
 
 to make-flies [flycount]
@@ -47,6 +45,36 @@ to make-flies [flycount]
     set shape "bug"
   ]
 end
+
+to make-farms [farmcount]
+  create-farms farmcount [
+    setxy random-xcor random-ycor
+    set color green
+    set shape "square"
+    set size 3
+  ]
+end
+
+to make-people [numpeople]
+  create-farms numpeople [
+    setxy random-xcor random-ycor
+    set color blue
+    set shape "circle"
+    set size 1.5
+  ]
+end
+
+; --------------------------
+; - GO FUNCTIONS
+; --------------------------
+
+to go
+  ask flies []
+
+  tick
+end
+
+
 
 to-report finding-nearest-bug
 
