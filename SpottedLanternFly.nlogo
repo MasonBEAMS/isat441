@@ -1,10 +1,23 @@
+;-------------------------------------------------
+;- Allie Zombron, Mason Scofield, Julio
+;-------------------------------------------------
 breed [flies fly]
+breed [farms farm]
 
 flies-own
 [
   nearest-fly
-  nearest-crop
+  nearest-farm
+  my-health
 ]
+
+farms-own
+[
+  my-crops
+  my-pesticide-use
+]
+
+;--------------------------
 
 to setup
   ca
