@@ -85,7 +85,7 @@ to go
   ask flies[
     fd my-speed
   ]
-
+  wait .1
 end
 
 
