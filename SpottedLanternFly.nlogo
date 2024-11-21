@@ -1,6 +1,10 @@
-turtles-own
-[nearest-fly
-nearest-crop]
+breed [flies fly]
+
+flies-own
+[
+  nearest-fly
+  nearest-crop
+]
 
 to setup
   ca
@@ -12,7 +16,7 @@ to setup
 end
 
 to go
-  ask turtles []
+  ask flies []
 
   tick
 end
@@ -21,7 +25,6 @@ end
 to-report finding-nearest-bug
 
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
