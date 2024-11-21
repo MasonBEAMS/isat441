@@ -30,6 +30,7 @@ people-own
 ; --------------------------
 ; - SET UP FUNCTIONS
 ; --------------------------
+
 to setup
   clear-all
   make-flies init-flies ;makes flies based on slider
@@ -69,9 +70,7 @@ end
 ; --------------------------
 
 to go
-  ask flies []
 
-  tick
 end
 
 
