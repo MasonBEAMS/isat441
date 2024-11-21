@@ -12,19 +12,20 @@ flies-own
   nearest-fly
   nearest-farm
   my-health
+  my-speed
 ]
 
 farms-own
 [
   my-crops
   my-pesticide-use
-
 ]
 
 people-own
 [
   my-vision-cone
   participation-rate ;percentage chance of killing a bug upon finding one
+  my-speed
 ]
 
 ; --------------------------
@@ -33,10 +34,16 @@ people-own
 
 to setup
   clear-all
-  make-flies init-flies ;makes flies based on slider
   make-farms init-farms ;makes farms based on slider
-  make-people init-people ;makes farms based on slider
+
+  make-flies init-flies ;makes flies based on slider
+  ask flies [set my-speed 1]
+
+  make-people init-people ;makes people based on slider
+  ask people [set my-speed 1]
+
   reset-ticks
+
 end
 
 to make-flies [flycount]
@@ -44,6 +51,7 @@ to make-flies [flycount]
     setxy random-xcor random-ycor
     set color red
     set shape "bug"
+    set heading random 360
   ]
 end
 
@@ -57,11 +65,12 @@ to make-farms [farmcount]
 end
 
 to make-people [numpeople]
-  create-farms numpeople [
+  create-people numpeople [
     setxy random-xcor random-ycor
     set color blue
-    set shape "circle"
+    set shape "person"
     set size 1.5
+    set heading random 360
   ]
 end
 
@@ -70,6 +79,12 @@ end
 ; --------------------------
 
 to go
+  ask people [
+    fd my-speed
+  ]
+  ask flies[
+    fd my-speed
+  ]
 
 end
 
@@ -167,6 +182,23 @@ init-farms
 1
 NIL
 HORIZONTAL
+
+BUTTON
+51
+111
+114
+144
+NIL
+go
+T
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
