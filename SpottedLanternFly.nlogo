@@ -18,7 +18,7 @@ flies-own
 people-own
 [
   my-target
-  participation-rate ;percentage chance of killing a bug upon finding one
+  participation ;boolean: based on a percentage chance of killing a bug upon finding one
   my-speed
 ]
 
@@ -83,6 +83,7 @@ to go
     fd my-speed
   ]
   wait .1
+  tick
 end
 
 to aquire-bug
