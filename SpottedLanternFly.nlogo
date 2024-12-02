@@ -18,10 +18,6 @@ flies-own
   on-patch ;boolean if on patch or not
   my-health
   my-speed
-
-  timer-active
-  start-time
-  timer-duration
 ]
 
 people-own
@@ -95,7 +91,7 @@ to go
     aquire-fly
   ]
 
-  ;------------
+  ;--------
 
   ask flies[
     ;patch-here (to use later)
@@ -106,22 +102,38 @@ to go
     fd my-speed
   ]
 
-  ;------------
+  ;--------
 
   ask patches with [pcolor = green]
   [
-    if any? flies-on self
-    [
-      let eating-flies flies-on self
-      ask eating-flies [set on-patch true]
-    ]
+    attract-flies
   ]
   wait .1
   tick
 end
 
 ;-----------------------------------------------
-;fly methods
+;farm methods
+
+
+to attract-flies
+  if any? flies-on self
+    [
+      let eating-flies flies-on self
+      ask eating-flies [
+        set on-patch true
+      ]
+      if count eating-flies >= 3 [
+        set pcolor brown
+        ask eating-flies [
+          set on-patch false
+        ]
+      ]
+    ]
+end
+
+;-----------------------------------------------
+;human methods
 
 to aquire-fly
   let visible-flies flies in-cone 2 75
@@ -132,13 +144,6 @@ to aquire-fly
     if distance nearest-fly < 1 [ ask nearest-fly [die]]
   ] [set my-speed (.1  * speed-multiplier)]
 end
-
-to reproduce
-
-end
-
-;-----------------------------------------------
-;human methods
 
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -194,7 +199,7 @@ init-flies
 init-flies
 50
 300
-100.0
+217.0
 1
 1
 NIL
@@ -294,6 +299,24 @@ speed-multiplier
 1
 NIL
 VERTICAL
+
+PLOT
+656
+215
+856
+365
+living crops
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count turtles"
 
 @#$#@#$#@
 ## WHAT IS IT?
