@@ -3,13 +3,18 @@
 ; -------------------------------------------------
 
 
+globals
+[
+  person-count
+  farm-count
+  fly-count
+]
+
 breed [flies fly]
-breed [farms farm]
 breed [people person]
 
 flies-own
 [
-  nearest-fly
   nearest-farm
   my-health
   my-speed
@@ -30,12 +35,12 @@ to setup
   clear-all
 
   ask patches [set pcolor white]
-  make-farms init-farms
+  make-farms init-farms ; makes farms based on "init-farms" slider
 
-  make-flies init-flies ;makes flies based on slider
+  make-flies init-flies ;makes flies based on "init-flies" slider
   ask flies [set my-speed .1]
 
-  make-people init-people ;makes people based on slider
+  make-people init-people ;makes people based on "init-people" slider
   ask people [set my-speed .1]
 
   reset-ticks
@@ -67,7 +72,10 @@ to make-people [numpeople]
     set shape "person"
     set size 1.5
     set heading random 360
+    set participation false
   ]
+  let num-part round(numpeople * (percent-participation / 100))
+  ask n-of num-part people [set participation true]
 end
 
 ; --------------------------
@@ -77,21 +85,25 @@ end
 to go
   ask people [
     fd my-speed
-
   ]
   ask flies[
     fd my-speed
+  ]
+  ask people with [participation] [
+    aquire-fly
   ]
   wait .1
   tick
 end
 
-to aquire-bug
-
-end
-
-to-report finding-nearest-bug
-
+to aquire-fly
+  let visible-flies flies in-cone 5 135
+  ifelse any? visible-flies [
+    let nearest-fly min-one-of visible-flies [distance myself]
+    face nearest-fly
+    set my-speed .2
+    if distance nearest-fly < 1 [ ask nearest-fly [die]]
+  ] [set my-speed .1]
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -147,7 +159,7 @@ init-flies
 init-flies
 10
 100
-50.0
+100.0
 1
 1
 NIL
@@ -161,8 +173,8 @@ SLIDER
 init-people
 init-people
 5
-50
-25.0
+25
+10.0
 1
 1
 NIL
@@ -199,6 +211,21 @@ NIL
 NIL
 NIL
 1
+
+SLIDER
+572
+479
+744
+512
+percent-participation
+percent-participation
+0
+100
+47.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?
