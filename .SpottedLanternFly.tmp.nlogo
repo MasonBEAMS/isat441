@@ -5,7 +5,7 @@
 
 globals
 [
-  person-count
+  person-count ;current counts of each
   farm-count
   fly-count
 ]
@@ -15,9 +15,10 @@ breed [people person]
 
 flies-own
 [
-  nearest-farm
+  on-patch ;boolean if on patch or not
   my-health
   my-speed
+  time
 ]
 
 people-own
@@ -38,10 +39,10 @@ to setup
   make-farms init-farms ; makes farms based on "init-farms" slider
 
   make-flies init-flies ;makes flies based on "init-flies" slider
-  ask flies [set my-speed .1]
+  ask flies [set my-speed .1 * speed-multiplier]
 
   make-people init-people ;makes people based on "init-people" slider
-  ask people [set my-speed .1]
+  ask people [set my-speed .1 * speed-multiplier]
 
   reset-ticks
 
@@ -53,6 +54,7 @@ to make-flies [flycount]
     set color red
     set shape "bug"
     set heading random 360
+    set on-patch false
   ]
 end
 
@@ -86,11 +88,30 @@ to go
   ask people [
     fd my-speed
   ]
-  ask flies[
-    fd my-speed
-  ]
   ask people with [participation] [
     aquire-fly
+  ]
+
+  ;------------
+
+  ask flies[
+    ;patch-here (to use later)
+    ifelse on-patch = false
+    [set my-speed (.1 * speed-multiplier)]
+    [set my-speed 0]
+
+    fd my-speed
+  ]
+
+  ;------------
+
+  ask patches with [pcolor = green]
+  [
+    if any? flies-on self
+    [
+      let eating-flies flies-on self
+      ask eating-flies [set on-patch true]
+    ]
   ]
   wait .1
   tick
@@ -100,21 +121,22 @@ end
 ;fly methods
 
 to aquire-fly
-  let visible-flies flies in-cone 5 135
+  let visible-flies flies in-cone 2 75
   ifelse any? visible-flies [
     let nearest-fly min-one-of visible-flies [distance myself]
     face nearest-fly
-    set my-speed .2
+    set my-speed (.2  * speed-multiplier)
     if distance nearest-fly < 1 [ ask nearest-fly [die]]
-  ] [set my-speed .1]
+  ] [set my-speed (.1  * speed-multiplier)]
+end
+
+to reproduce
+
 end
 
 ;-----------------------------------------------
 ;human methods
 
-to reproduce
-
-end
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -236,6 +258,39 @@ percent-participation
 1
 NIL
 HORIZONTAL
+
+PLOT
+650
+10
+850
+160
+Flies
+NIL
+NIL
+0.0
+10.0
+0.0
+10.0
+true
+false
+"" ""
+PENS
+"default" 1.0 0 -16777216 true "" "plot count flies"
+
+SLIDER
+36
+219
+73
+369
+speed-multiplier
+speed-multiplier
+.5
+2
+2.0
+.1
+1
+NIL
+VERTICAL
 
 @#$#@#$#@
 ## WHAT IS IT?
