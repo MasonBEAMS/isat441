@@ -100,7 +100,7 @@ end
 ;fly methods
 
 to aquire-fly
-  let visible-flies flies in-cone 3 90
+  let visible-flies flies in-cone 5 135
   ifelse any? visible-flies [
     let nearest-fly min-one-of visible-flies [distance myself]
     face nearest-fly
