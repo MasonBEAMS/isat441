@@ -214,7 +214,7 @@ init-people
 init-people
 5
 25
-10.0
+25.0
 1
 1
 NIL
@@ -261,7 +261,7 @@ percent-participation
 percent-participation
 0
 100
-47.0
+100.0
 1
 1
 NIL
@@ -316,7 +316,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count turtles"
+"default" 1.0 0 -16777216 true "" "plot count patches with [pcolor = green]"
 
 @#$#@#$#@
 ## WHAT IS IT?
