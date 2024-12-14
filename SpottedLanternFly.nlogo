@@ -144,7 +144,6 @@ to aquire-fly
     if distance nearest-fly < 1 [ ask nearest-fly [die]]
   ] [set my-speed (.1  * speed-multiplier)]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -199,7 +198,7 @@ init-flies
 init-flies
 50
 300
-217.0
+251.0
 1
 1
 NIL
@@ -261,7 +260,7 @@ percent-participation
 percent-participation
 0
 100
-100.0
+50.0
 1
 1
 NIL
@@ -288,14 +287,14 @@ PENS
 SLIDER
 36
 219
-73
+69
 369
 speed-multiplier
 speed-multiplier
 .5
-2
-2.0
-.1
+5
+5.0
+.5
 1
 NIL
 VERTICAL
